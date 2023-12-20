@@ -105,7 +105,6 @@ button {
 
 p {
     text-wrap: pretty;
-    max-width: 60ch;
 }
 
 svg {
@@ -269,7 +268,7 @@ a {
     text-transform: uppercase;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
@@ -302,6 +301,14 @@ a {
 
 .btn-primary:is(:hover, :focus-within) {
     background-color: hsl(var(--clr-accent) / 0.8);
+}
+
+.btn-secondary {
+    padding: 0.3em 1em;
+}
+
+.btn-secondary:is(:hover, :focus-within) {
+    outline: 2px solid hsl(var(--clr-accent));
 }
 
 /* Components */
@@ -537,6 +544,10 @@ body {
 /* Hero section */
 .hero {
     position: relative;
+    height: calc(100lvh + var(--space-3xl));
+}
+
+.hero > div {
     height: calc(100lvh - (4 * var(--space-m)) - (2 * var(--step-0)));
 }
 
@@ -551,7 +562,7 @@ body {
     margin-left: calc(-50vw + 50%);
 }
 
-.hero > div {
+.hero > div > div {
     padding: var(--space-m);
     background-color: hsl(0 0% 0% / 0.4);
     width: 50%;
@@ -559,22 +570,32 @@ body {
     border-radius: 3px;
 }
 
+.hero__description {
+    max-width: 45ch;
+}
+
 @media (width < 45em) {
-    .hero > div {
+    .hero > div > div {
         width: 100%;
     }
 }
 
 /* Features section */
-.features{
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    grid-template-rows: auto auto 1fr auto;
+.features {
+    --_feature-icon-width: 2.5rem;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: var(--space-m) auto auto 1fr auto;
     gap: var(--space-m);
-    padding-block: var(--space-3xl);
+    padding-block: var(--space-3xl) 0;
+    position: relative;
+    top: calc(
+        -1 * (var(--space-3xl) + var(--space-m) + (var(--_feature-icon-width)))
+    );
 }
 
 .feature {
-    grid-row: span 4;
+    grid-row: 2 / span 4;
     grid-template-rows: subgrid;
     box-shadow: 0px 20px 30px -10px hsl(0 0% 0% / 0.4);
     padding: var(--space-m);
@@ -586,13 +607,84 @@ body {
     outline-offset: -2px;
 }
 
-.feature:not(:nth-of-type(2):is(:hover, :focus-within)){
+.feature:nth-of-type(2) {
+    grid-row: 1 / span 5;
+}
+
+.feature:not(:nth-of-type(2)) {
+    background-color: hsl(var(--clr-primary) / 0.4);
+}
+
+.feature:not(:nth-of-type(2):is(:hover, :focus-within)) {
     outline-color: hsl(var(--clr-accent));
 }
 
 .feature__icon {
-    width: 2.5rem;
+    width: var(--_feature-icon-width);
     justify-self: center;
+}
+
+.feature__cta {
+    justify-self: center;
+    grid-auto-flow: column;
+    gap: calc(var(--space-m) / 2);
+}
+
+.feature:nth-of-type(2) .feature__icon {
+    grid-row: 2 / 3;
+    align-self: end;
+}
+
+.feature:nth-of-type(2) h2 {
+    grid-row: 3 / 4;
+}
+
+.feature:nth-of-type(2) p {
+    grid-row: 4 / 5;
+}
+
+.feature:nth-of-type(2) .feature__cta {
+    grid-row: -2 / -1;
+}
+
+.feature:nth-of-type(2) .feature__cta:is(:hover, :focus-within) {
+    outline-color: hsl(var(--clr-primary));
+}
+
+@media (width < 45em) {
+    .features {
+        grid-template-rows: auto auto 1fr auto;
+    }
+
+    .feature {
+        grid-row: span 4;
+        grid-column: 1 / -1;
+    }
+
+    .feature:nth-of-type(1) {
+        grid-column: 1 / -1;
+        grid-row: 1 / span 4;
+    }
+
+    .feature:nth-of-type(2) {
+        grid-row: 5 / span 4;
+    }
+
+    .feature:nth-of-type(2) .feature__icon {
+        grid-row: 1 / 2;
+    }
+
+    .feature:nth-of-type(2) h2 {
+        grid-row: 2 / 3;
+    }
+
+    .feature:nth-of-type(2) p {
+        grid-row: 3 / 4;
+    }
+
+    .feature:nth-of-type(2) .feature__cta {
+        grid-row: -2 / -1;
+    }
 }
 
 main > :not(.hero, .features),
