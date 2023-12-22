@@ -547,11 +547,13 @@ body {
 /* Hero section */
 .hero {
     position: relative;
-    height: calc(100lvh + var(--space-3xl));
+    height: calc(100vh + var(--space-3xl));
+    height: calc(100svh + var(--space-3xl));
 }
 
 .hero > div {
-    height: calc(100lvh - (4 * var(--space-m)) - (2 * var(--step-0)));
+    height: calc(100vh - (4 * var(--space-m)) - (2 * var(--step-0)));
+    height: calc(100svh - (4 * var(--space-m)) - (2 * var(--step-0)));
 }
 
 .hero__image {
